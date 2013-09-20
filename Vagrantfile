@@ -21,8 +21,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.data_bags_path = "data_bags"
-    # chef.environment = "vagrant"
-    # chef.environments_path = "environments"
+    chef.environment = "vagrant"
+    chef.environments_path = "environments"
 
     chef.json = {
       :mysql => {
@@ -37,8 +37,7 @@ Vagrant.configure("2") do |config|
     }
 
     chef.run_list = [
-        "recipe[osldev::default]",
-        "recipe[ganeti_webmgr::mysql]"
+        "recipe[osldev::default]"
     ]
   end
 end
