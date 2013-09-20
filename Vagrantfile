@@ -4,11 +4,8 @@
 Vagrant.configure("2") do |config|
   config.vm.hostname = "osldev"
 
-  #config.vm.box = "Berkshelf-CentOS-6.3-x86_64-minimal"
-  #config.vm.box_url = "https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box"
-
-  config.vm.box = "centos-6-20130404"
-  config.vm.box_url = "http://packages.osuosl.org/vagrant/centos-6-20130404.box"
+  config.vm.box = "centos-6-provisionerless"
+  config.vm.box_url = "http://packages.osuosl.org/vagrant/opscode_centos-6.4_provisionerless.box"
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 8000, host: 8000
@@ -19,8 +16,8 @@ Vagrant.configure("2") do |config|
   synced_folder = "/home/vagrant/projects"
   config.vm.synced_folder "/home/chance/projects", synced_folder
 
+  config.omnibus.chef_verison = :latest
   config.berkshelf.enabled = true
-  config.omnibus.chef_verison :latest
 
   config.vm.provision :chef_solo do |chef|
     chef.data_bags_path = "data_bags"
@@ -40,7 +37,6 @@ Vagrant.configure("2") do |config|
     }
 
     chef.run_list = [
-        "mysql",
         "recipe[osldev::default]",
         "recipe[ganeti_webmgr::mysql]"
     ]
