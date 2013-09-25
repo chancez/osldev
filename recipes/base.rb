@@ -2,6 +2,7 @@ include_recipe "yum::ius"
 include_recipe "python"
 include_recipe "zsh"
 include_recipe "vim"
+include_recipe "git"
 
 package "python27" do
   action :install
